@@ -22,7 +22,7 @@ fullscreen      = 0
 # ── Android ──────────────────────────────────────────────────────────────────
 android.api             = 33
 android.minapi          = 21
-android.ndk             = 25b
+android.ndk = 27c
 android.archs           = arm64-v8a, armeabi-v7a
 
 # ── Buildozer internals ───────────────────────────────────────────────────────
@@ -31,3 +31,4 @@ warn_on_root    = 1
 
 # (bool) Automatically accept SDK license agreements (required for CI/non-interactive builds)
 android.accept_sdk_license = True
+android.extract_native_libs = False
