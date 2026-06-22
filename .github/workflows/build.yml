@@ -11,12 +11,12 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Accept Android SDK licenses and build APK
+      - name: Build APK with Buildozer
+        env:
+          ANDROID_SDK_LICENSE_ACCEPT: "y"
         run: |
           docker run --rm \
-            -v "${{ github.workspace }}:/home/user/hostcwd" \
-            kivy/buildozer android update_sdk -- --licenses
-          docker run --rm \
+            -e ANDROID_SDK_LICENSE_ACCEPT=y \
             -v "${{ github.workspace }}:/home/user/hostcwd" \
             kivy/buildozer android debug
 
