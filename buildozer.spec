@@ -28,3 +28,6 @@ android.archs           = arm64-v8a, armeabi-v7a
 # ── Buildozer internals ───────────────────────────────────────────────────────
 log_level       = 2
 warn_on_root    = 1
+
+# (bool) Automatically accept SDK license agreements (required for CI/non-interactive builds)
+android.accept_sdk_license = True
