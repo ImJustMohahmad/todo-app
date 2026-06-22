@@ -13,7 +13,7 @@ source.include_exts = py,ttf,json
 source.include_patterns = fonts/*.ttf
 
 # ── Dependencies ──────────────────────────────────────────────────────────────
-requirements    = python3,kivy
+requirements    = python3,kivy,python-bidi,arabic-reshaper
 
 # ── UI / behaviour ───────────────────────────────────────────────────────────
 orientation     = portrait

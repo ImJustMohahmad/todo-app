@@ -5,6 +5,9 @@
 import json
 import os
 
+import arabic_reshaper
+from bidi.algorithm import get_display
+
 from kivy.app import App
 from kivy.core.text import LabelBase
 from kivy.core.window import Window
@@ -35,6 +38,11 @@ WHITE     = (1, 1, 1, 1)
 WHITE_DIM = (1, 1, 1, 0.28)
 
 # ─── Helpers ─────────────────────────────────────────────────────────────────
+
+def rtl(text: str) -> str:
+    """Reshape and reorder Persian/Arabic text for correct Kivy rendering."""
+    return get_display(arabic_reshaper.reshape(text))
+
 
 def to_persian(n: int) -> str:
     digits = "۰۱۲۳۴۵۶۷۸۹"
@@ -95,7 +103,8 @@ class TaskRow(Card):
         self.add_widget(del_btn)
 
         # ── task text — middle, stretches ────────────────────────────────
-        display = ("[s]" + text + "[/s]") if done else text
+        shaped = rtl(text)
+        display = ("[s]" + shaped + "[/s]") if done else shaped
         lbl = Label(
             text=display,
             markup=True,
@@ -178,7 +187,7 @@ class TodoApp(App):
         title_col = BoxLayout(orientation="vertical", size_hint=(1, 1))
 
         ttl = Label(
-            text="مدیریت کار های روزانه ات",
+            text=rtl("مدیریت کار های روزانه ات"),
             font_name=self.font,
             bold=True,
             font_size=dp(17),
@@ -190,7 +199,7 @@ class TodoApp(App):
         ttl.bind(size=ttl.setter("text_size"))
 
         sub = Label(
-            text="ساخته شده توسط محمدرضا شایان نژاد",
+            text=rtl("ساخته شده توسط محمدرضا شایان نژاد"),
             font_name=self.font,
             font_size=dp(10),
             color=(1, 1, 1, 0.30),
@@ -250,7 +259,7 @@ class TodoApp(App):
         )
 
         self.inp = TextInput(
-            hint_text="یک کار جدید بنویس...",
+            hint_text=rtl("یک کار جدید بنویس..."),
             multiline=False,
             font_name=self.font,
             font_size=dp(14),
@@ -268,7 +277,7 @@ class TodoApp(App):
 
         # white rounded "اضافه کن" button
         add_btn = Button(
-            text="اضافه کن",
+            text=rtl("اضافه کن"),
             font_name=self.font,
             bold=True,
             font_size=dp(13),
