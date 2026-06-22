@@ -12,13 +12,10 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Build APK with Buildozer
-        env:
-          ANDROID_SDK_LICENSE_ACCEPT: "y"
         run: |
           docker run --rm \
-            -e ANDROID_SDK_LICENSE_ACCEPT=y \
             -v "${{ github.workspace }}:/home/user/hostcwd" \
-            kivy/buildozer android debug
+            kivy/buildozer /bin/bash -c "yes | buildozer android debug"
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
