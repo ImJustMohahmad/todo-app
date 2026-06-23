@@ -6,19 +6,42 @@ on:
     branches: [ main ]
 
 jobs:
-  build:
+  build-arm64:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
 
-      - name: Build APK with Buildozer
+      - name: Set arch to arm64-v8a only
+        run: sed -i 's/android.archs.*/android.archs = arm64-v8a/' buildozer.spec
+
+      - name: Build APK (arm64-v8a)
         run: |
           docker run --rm \
             -v "${{ github.workspace }}:/home/user/hostcwd" \
             kivy/buildozer android debug
 
-      - name: Upload APK
+      - name: Upload arm64 APK
         uses: actions/upload-artifact@v4
         with:
-          name: todolist-apk
+          name: todolist-arm64-v8a
+          path: bin/*.apk
+
+  build-armv7:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set arch to armeabi-v7a only
+        run: sed -i 's/android.archs.*/android.archs = armeabi-v7a/' buildozer.spec
+
+      - name: Build APK (armeabi-v7a)
+        run: |
+          docker run --rm \
+            -v "${{ github.workspace }}:/home/user/hostcwd" \
+            kivy/buildozer android debug
+
+      - name: Upload armv7 APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: todolist-armeabi-v7a
           path: bin/*.apk
